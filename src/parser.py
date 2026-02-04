@@ -109,12 +109,12 @@ class Parser:
         return left_rpn, operator_type, right_rpn
 
 
-# Test
-if __name__ == "__main__":
-    p = Parser()
-    rule = "A + (B | C) => D" 
-    left, op, right = p.parse_rule(rule)
-    print(f"Input: {rule}")
-    print(f"left RPN: {left}") # Expect ['A', 'B', 'C', '|', '+']
-    print(f"Op: {op}")
-    print(f"right RPN: {right}")
+# # Test
+# if __name__ == "__main__":
+#     p = Parser()
+#     rule = "A + (B | C) => D" 
+#     left, op, right = p.parse_rule(rule)
+#     print(f"Input: {rule}")
+#     print(f"left RPN: {left}") # Expect ['A', 'B', 'C', '|', '+']
+#     print(f"Op: {op}")
+#     print(f"right RPN: {right}")
