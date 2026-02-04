@@ -70,11 +70,11 @@ class Parser:
                     # When '(', discard parenthesis
                     operator_stack.pop() # Discard open parenthesis
                 else:
-                    raise ValueError("Mismatched parentheses")
+                    raise ValueError("Mismatched parenthesis")
 
         while operator_stack:
             if operator_stack[-1] == '(':
-                raise ValueError("Mismatched parentheses")
+                raise ValueError("Mismatched parenthesis")
             # Append the remaining operators from operator_stack to output_queue
             output_queue.append(operator_stack.pop())
 
