@@ -1,0 +1,14 @@
+# Mandatory Basics (AND, OR, NOT, Parentheses)
+
+# Rules
+A + B => C          # If A and B, then C
+(C | D) + !E => F   # If (C or D) and NOT E, then F
+F => G              # F implies G
+
+# Initial Facts
+=AB                 # A and B are True. E is False (default).
+
+# Queries
+?CEFG
+
+# Expected Result: TFTT

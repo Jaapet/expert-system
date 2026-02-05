@@ -1,0 +1,14 @@
+# Complex Conclusions (AND in RHS)
+
+# Rules
+A => B + C          # A implies both B and C
+C => D + E          # C implies both D and E
+B + D => F
+
+# Initial Facts
+=A
+
+# Queries
+?BCDEF
+
+# Expected Result: TTTTT

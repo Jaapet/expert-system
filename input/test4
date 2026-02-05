@@ -1,0 +1,14 @@
+# Ambiguity (OR in Conclusion - Bonus)
+
+# Rules
+A => B | C          # A implies B OR C
+B => D
+C => E
+
+# Initial Facts
+=A
+
+# Queries
+?BC
+
+# Expected Result: UU

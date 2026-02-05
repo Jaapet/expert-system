@@ -1,0 +1,14 @@
+# Bonus Features (XOR, Biconditional)
+
+# Rules
+A ^ B => C          # A XOR B implies C
+D <=> E             # D if and only if E
+C + D => F
+
+# Initial Facts
+=AD                 # A is True, D is True. (B is False)
+
+# Queries
+?CEF
+
+# Expected Result: TTT

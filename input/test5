@@ -1,0 +1,13 @@
+# Contradictions (Error Handling)
+
+# Rules
+A => B
+A => !B             # Contradiction: A implies B and NOT B
+
+# Initial Facts
+=A
+
+# Queries
+?B
+
+# Expected Result: Contradiction
