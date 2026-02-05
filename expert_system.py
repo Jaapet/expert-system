@@ -17,7 +17,7 @@ def main():
 
         queries = input_handler.process_file()
 
-        print(kb)
+        # print(kb)
 
         engine = e.InferenceEngine(kb)
         for query in queries:
@@ -26,6 +26,7 @@ def main():
     
     except Exception as ex:
         print(f"Error: {ex}")
+
 
 if __name__ == "__main__":
     main()

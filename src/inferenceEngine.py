@@ -106,21 +106,21 @@ class InferenceEngine:
         """
         Determines the truth value of a query symbol (True, False, or None).
         """
+        # Retrieve the node corresponding to the query
+        node = self.kb.get_node(query)
+
         # Case: loop detection
         if query in self.recursion_stack:
             return False 
 
         # Case: check initial fact
-        if self.kb.facts.get(query) is True:
+        if node.is_true_by_default:
             return True
 
         self.recursion_stack.add(query)
 
-        # Find rules that imply query ('query' exists in right)
-        query_rules = []
-        for rule in self.kb.rules:
-            if query in rule['right']:
-                query_rules.append(rule)
+        # Get rules that imply query
+        query_rules = node.implying_rules
 
         is_true = False
         is_false = False
@@ -129,7 +129,7 @@ class InferenceEngine:
         # Evaluate rules
         for rule in query_rules:
             # Evaluate left recursively
-            left_result = self.eval_rpn(rule['left'])
+            left_result = self.eval_rpn(rule.left)
 
             # If LEFT is True, check right
             if left_result is True:
@@ -139,7 +139,7 @@ class InferenceEngine:
                 # Complex: A => B + C (Imply B is True)
                 # Ambiguous: A => B | C (B is Undetermined)
 
-                result = self._check_conclusion(rule['right'], query)
+                result = self._check_conclusion(rule.right, query)
 
                 if result is True:
                     is_true = True
