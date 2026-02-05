@@ -70,6 +70,35 @@ class KnowledgeBase:
                 node.value = True
                 node.is_true_by_default = True
 
+
+    def add_facts(self, facts_str):
+        """
+        Parses the added facts string (e.g., "=ABC").
+        Sets these to True.
+        """
+        # Set added facts to True (ex: "=ABC")
+        clean_facts = facts_str.replace('=', '').strip()
+        for char in clean_facts:
+            if char.isupper():
+                node = self.get_node(char)
+                node.value = True
+                node.is_true_by_default = True
+
+
+    def rm_facts(self, facts_str):
+        """
+        Parses the rm facts string (e.g., "-ABC").
+        Sets these to False.
+        """
+        # Set rm facts to False (ex: "-ABC")
+        clean_facts = facts_str.replace('-', '').strip()
+        for char in clean_facts:
+            if char.isupper():
+                node = self.get_node(char)
+                node.value = False
+                node.is_true_by_default = False
+
+
     # More readable print
     def __str__(self):
         return f"Graph Nodes: {len(self.nodes)} symbols loaded."

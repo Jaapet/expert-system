@@ -31,3 +31,15 @@ This project is an **Expert System** for Propositional Calculus. It implements a
 ```
 python3 expert_system.py input/<file_name>
 ```
+To add initial facts dynamically while the programm is running (e.g. adding A):
+```
+=A
+```
+To remove initial facts dynamically while the programm is running (e.g. removing A):
+```
+-A
+```
+To quit:
+```
+exit
+```
