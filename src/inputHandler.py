@@ -54,7 +54,7 @@ class InputHandler:
             print("Error: Input file is missing query line (starting with '?').")
             sys.exit(1)
 
-        self.kb.set_initial_facts(line)
+        self.kb.set_initial_facts(self.raw_facts_line)
 
         return self.query_list
 
