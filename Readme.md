@@ -13,11 +13,11 @@ This project is an **Expert System** for Propositional Calculus. It implements a
     * Complex Conclusions: `A => B + C` (A implies both B and C).
     * Multiple rules concluding the same fact.
 * **Precedence Handling**: Strictly adheres to operator priority: `()` > `!` > `+` > `|` > `^` > `=>`.
-* **Error Handling**: Detects syntax errors, contradictions, and cycles in logic.
+* **Error Handling**: Detects syntax errors, contradictions.
 
 ### Bonus Features
 * **Biconditional Rules**: Supports `<=>` (If-and-only-if) logic.
-* **Disjunctive Conclusions**: Handles `OR` and `XOR` in conclusions (e.g., `A => B | C`), leading to "Undetermined" states.
+* **Disjunctive Conclusions**: Handles `OR` and `XOR` in conclusions (e.g., `A => B | C`).
 * **Reasoning Visualization**: Displays the step-by-step logic used to derive an answer.
 * **Interactive Mode**: Allows users to modify facts dynamically without restarting.
 * a
@@ -28,4 +28,6 @@ This project is an **Expert System** for Propositional Calculus. It implements a
 * Python 3.x
 
 ### Running the Program
-* a
+```
+python3 expert_system.py input/<file_name>
+```
