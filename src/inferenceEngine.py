@@ -42,6 +42,9 @@ class InferenceEngine:
 
 
     def _apply_operator(self, stack, op):
+        """
+        Applies a logical operator to values popped from the stack.
+        """
         
         if op == '!': # NOT
             val = stack.pop()
@@ -170,11 +173,16 @@ class InferenceEngine:
         if is_true and is_false:
             raise ValueError(f"Contradiction: Fact '{query}' is implied to be both True and False.")
 
+        refreshed_node = self.kb.get_refreshed_node(query)
+
         if is_true:
+            refreshed_node.value = True
             return True
         if is_false:
+            refreshed_node.value = False
             return False
         if is_undetermined:
+            refreshed_node.value = None
             return None
 
         return False

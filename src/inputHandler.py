@@ -17,7 +17,9 @@ class InputHandler:
 
 
     def process_file(self):
-
+        """
+        Reads the file to populate the knowledge base with rules and facts, returning the list of queries.
+        """
         try:
             with open(self.filename, 'r') as f:
                 lines = f.readlines()
@@ -60,7 +62,9 @@ class InputHandler:
 
 
     def _validate_and_store_facts(self, line, line_num):
-
+        """
+        Validates the initial facts line format and stores it for application after all rules are parsed.
+        """
         if self.is_initial_facts_set:
             print(f"Error (Line {line_num}): Multiple initial fact declarations.")
             sys.exit(1)
@@ -75,7 +79,9 @@ class InputHandler:
 
 
     def _handle_query(self, line, line_num):
-
+        """
+        Validates the query line syntax and extracts the list of target symbols to solve.
+        """
         if self.is_query_set:
             print(f"Error (Line {line_num}): Multiple query declarations found.")
             sys.exit(1)
@@ -90,6 +96,9 @@ class InputHandler:
 
 
     def _handle_rule(self, line, line_num):
+        """
+        Validates the syntax of a rule line, parses it, and registers it in the knowledge base.
+        """
         # Character Validation
         if not re.match(r'^[A-Z()!+|^=><]+$', line):
             print(f"Error (Line {line_num}): Invalid characters in rule. Found: {line}")

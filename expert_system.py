@@ -61,13 +61,13 @@ def main():
         queries = input_handler.process_file()
 
         # print(kb)
-
+        kb.refreshed_nodes = kb.nodes
         engine = e.InferenceEngine(kb)
         for query in queries:
             result = engine.solve(query)
-            if result == True:
+            if result is True:
                 result_str = "TRUE"
-            elif result == False:
+            elif result is False:
                 result_str = "FALSE"
             else:
                 result_str = "UNDEFINED"
@@ -75,6 +75,7 @@ def main():
             engine.print_reasoning()
             print(f"\n==> {query} is {result_str}\n")
 
+        kb.dump_graphviz()
         run_interactive_mode(kb, engine, queries)
 
     

@@ -7,6 +7,17 @@ class KnowledgeBase:
         # Dict to store fact nodes.
         # Key: 'A', Value: FactNode object
         self.nodes = {}
+        self.refreshed_nodes = {}
+
+
+    def get_refreshed_node(self, char):
+        """
+        Singleton retrieval: If node exists, return it. 
+        If not, create it, register it, and return it.
+        """
+        if char not in self.refreshed_nodes:
+            self.refreshed_nodes[char] = n.FactNode(char)
+        return self.refreshed_nodes[char]
 
 
     def get_node(self, char):
@@ -97,6 +108,41 @@ class KnowledgeBase:
                 node = self.get_node(char)
                 node.value = False
                 node.is_true_by_default = False
+
+
+    def dump_graphviz(self):
+        """
+        Generates a .dot format file to visualize the graph.
+        """
+        filename = "graph.dot"
+        
+        try:
+            with open(filename, "w") as f:
+                f.write("digraph ExpertSystem {\n")
+                f.write("    rankdir=LR;\n")
+                f.write("    node [shape=circle];\n")
+                for name, node in self.refreshed_nodes.items():
+                    if node.is_true_by_default:
+                        color = "green"
+                        style = "filled"
+                    elif node.value is True:
+                        color = "cyan"
+                        style = "filled"
+                    elif node.value is False:
+                        color = "red"
+                        style = "filled"
+                    else:
+                        color = "yellow"
+                        style = "filled"
+                    f.write(f"    {name} [style=\"{style}\", fillcolor=\"{color}\"];\n")
+                    for rule in node.implying_rules:
+                        lhs_label = "".join(rule.left)
+                        f.write(f"    \"{lhs_label}\" -> {name};\n")
+                f.write("}\n")
+            print(f"Graphviz file generated: {filename}")
+
+        except IOError as e:
+            print(f"Error writing file: {e}")
 
 
     # More readable print

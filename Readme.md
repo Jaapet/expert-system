@@ -20,7 +20,11 @@ This project is an **Expert System** for Propositional Calculus. It implements a
 * **Disjunctive Conclusions**: Handles `OR` and `XOR` in conclusions (e.g., `A => B | C`).
 * **Reasoning Visualization**: Displays the step-by-step logic used to derive an answer.
 * **Interactive Mode**: Allows users to modify facts dynamically without restarting.
-* a
+* **Nodes Graph**: Generates a `graph.dot` file. Use a `.dot` visualizer to get the graph from the original input file.
+    * `Green nodes` are initial `True` facts.
+    * `Cyan nodes` are proven `True` facts.
+    * `Red nodes` are `False` facts.
+    * `Yellow nodes` are `Undetermined` facts.
 
 ## Installation & Usage
 
