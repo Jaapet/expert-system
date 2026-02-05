@@ -1,5 +1,6 @@
 import re
 
+
 class Parser:
 
     def __init__(self):
@@ -12,6 +13,25 @@ class Parser:
             '=>': {'prec': 0, 'assoc': 'right'}, # IMPLIES
             '<=>': {'prec': 0, 'assoc': 'right'} # IFF
         }
+
+
+    def _check_missing_operators(self, tokens):
+        """
+        Validates that there are explicit operators between facts/groups.
+        Prevents syntax like 'AB', 'A(B)', ')A', or 'A!B'.
+        """
+        for i in range(len(tokens) - 1):
+            curr = tokens[i]
+            nxt = tokens[i + 1]
+
+            # Term Endings: Facts (A-Z) or ')'
+            is_term_end = (curr.isupper() and len(curr) == 1) or curr == ')'
+
+            # Term Starts: Facts (A-Z), '(', or '!'
+            is_term_start = (nxt.isupper() and len(nxt) == 1) or nxt == '(' or nxt == '!'
+
+            if is_term_end and is_term_start:
+                raise ValueError(f"Missing operator between '{curr}' and '{nxt}'")
 
 
     def tokenize(self, expression):
@@ -89,6 +109,9 @@ class Parser:
         """
         tokens = self.tokenize(line)
 
+        # Check for missing operators
+        self._check_missing_operators(tokens)
+
         # Split tokens into left and right based on implies/iff (=>/<=>)
         if '<=>' in tokens:
             split_idx = tokens.index('<=>')
@@ -101,6 +124,9 @@ class Parser:
 
         left_tokens = tokens[:split_idx]
         right_tokens = tokens[split_idx+1:]
+
+        if not left_tokens or not right_tokens:
+            raise ValueError(f"Incomplete rule : Missing a side.")
 
         # RPN application on both sides
         left_rpn = self.rpn(left_tokens)
