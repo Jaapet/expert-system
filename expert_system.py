@@ -22,7 +22,16 @@ def main():
         engine = e.InferenceEngine(kb)
         for query in queries:
             result = engine.solve(query)
-            print(f"{query} is {result}")
+            if result == True:
+                result_str = "TRUE"
+            elif result == False:
+                result_str = "FALSE"
+            else:
+                result_str = "UNDEFINED"
+            print(f"----------------------------")
+            engine.print_reasoning()
+            print(f"\n==> {query} is {result_str}\n")
+
     
     except Exception as ex:
         print(f"Error: {ex}")

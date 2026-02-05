@@ -5,6 +5,8 @@ class InferenceEngine:
         self.kb = kb
         # Stack to store already seen (avoid loops : A -> B -> A)
         self.recursion_stack = set()
+        # BONUS: Store reasoning steps
+        self.explanation = []
 
 
     def _check_conclusion(self, right_rpn, query):
@@ -93,7 +95,7 @@ class InferenceEngine:
         for token in expression:
             if token.isupper():
                 # Solve the symbol
-                result = self.solve(token)
+                result = self.solve(token, is_sub_query=True)
                 stack.append(result)
 
             elif token in ['!', '+', '|', '^']:
@@ -102,10 +104,13 @@ class InferenceEngine:
         return stack[0] if stack else False
 
 
-    def solve(self, query):
+    def solve(self, query, is_sub_query=False):
         """
         Determines the truth value of a query symbol (True, False, or None).
         """
+        if not is_sub_query:
+            self.explanation = []
+
         # Retrieve the node corresponding to the query
         node = self.kb.get_node(query)
 
@@ -115,6 +120,9 @@ class InferenceEngine:
 
         # Case: check initial fact
         if node.is_true_by_default:
+            msg = f"\nWe know '{query}' is TRUE (Initial Fact)."
+            if msg not in self.explanation:
+                self.explanation.append(msg)
             return True
 
         self.recursion_stack.add(query)
@@ -143,10 +151,19 @@ class InferenceEngine:
 
                 if result is True:
                     is_true = True
+                    msg = f"\n{rule.__repr__()} applies." + f"\n-> Since {rule.left} is true, {query} is TRUE."
+                    if msg not in self.explanation:
+                        self.explanation.append(msg)
                 elif result is False:
                     is_false = True
+                    msg = f"\n{rule.__repr__()} applies." + f"\n-> Since {rule.left} is true, {query} is FALSE."
+                    if msg not in self.explanation:
+                        self.explanation.append(msg)
                 elif result is None:
                     is_undetermined = True
+                    msg = f"\n{rule.__repr__()} applies." + f"\n-> {rule.left} is true but conclusion is UNDEFINED."
+                    if msg not in self.explanation:
+                        self.explanation.append(msg)
 
         self.recursion_stack.remove(query)
 
@@ -161,3 +178,10 @@ class InferenceEngine:
             return None
 
         return False
+
+
+    def print_reasoning(self):
+        if not self.explanation:
+            print("  (No True facts found to support this conclusion, default is False)")
+        for line in self.explanation:
+            print(f"  {line}")
