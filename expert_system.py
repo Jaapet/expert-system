@@ -29,5 +29,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-#CASE 'FALSE => A | B', QUERY = A, A IS UNDETERMINED, NOT FALSE BY DEFAULT
